@@ -1020,26 +1020,26 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.46",
+            "version": "1.0.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2"
+                "reference": "dab4e7624efa543a943be978008f439c333f2249"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dab4e7624efa543a943be978008f439c333f2249",
+                "reference": "dab4e7624efa543a943be978008f439c333f2249",
                 "shasum": ""
             },
             "require": {
+                "ext-fileinfo": "*",
                 "php": ">=5.5.9"
             },
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
             },
             "require-dev": {
-                "ext-fileinfo": "*",
                 "phpspec/phpspec": "^3.4",
                 "phpunit/phpunit": "^5.7.10"
             },
@@ -1100,7 +1100,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-08-22T07:45:22+00:00"
+            "time": "2019-02-01T08:50:36+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1339,16 +1339,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.1.5",
+            "version": "3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6"
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
-                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
+                "url": "https://api.github.com/repos/opis/closure/zipball/ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
                 "shasum": ""
             },
             "require": {
@@ -1396,7 +1396,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-01-14T14:45:33+00:00"
+            "time": "2019-02-22T10:30:00+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3552,69 +3552,6 @@
             "time": "2016-01-20T08:20:44+00:00"
         },
         {
-            "name": "league/fractal",
-            "version": "0.11.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/fractal.git",
-                "reference": "5abf7b1ce12fea1e575355f76f4f58f15dba4be4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/5abf7b1ce12fea1e575355f76f4f58f15dba4be4",
-                "reference": "5abf7b1ce12fea1e575355f76f4f58f15dba4be4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "illuminate/pagination": "~4.1",
-                "mockery/mockery": "~0.9",
-                "pagerfanta/pagerfanta": "~1.0.0",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5",
-                "zendframework/zend-paginator": "~2.3"
-            },
-            "suggest": {
-                "illuminate/pagination": "The Illuminate Pagination component.",
-                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
-                "zendframework/zend-paginator": "Zend Framework Paginator"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.10-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Fractal\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Phil Sturgeon",
-                    "email": "me@philsturgeon.uk",
-                    "homepage": "http://philsturgeon.uk/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Handle the output of complex data structures ready for JSON output.",
-            "homepage": "http://fractal.thephpleague.com/",
-            "keywords": [
-                "api",
-                "json",
-                "league",
-                "rest"
-            ],
-            "time": "2014-12-10T16:59:07+00:00"
-        },
-        {
             "name": "mockery/mockery",
             "version": "1.2.2",
             "source": {
@@ -4443,50 +4380,6 @@
                 "xunit"
             ],
             "time": "2019-02-18T09:24:50+00:00"
-        },
-        {
-            "name": "robclancy/presenter",
-            "version": "1.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/robclancy/presenter.git",
-                "reference": "45b7f97a9e03db6aa052b6070bb2f4704ffec86b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/robclancy/presenter/zipball/45b7f97a9e03db6aa052b6070bb2f4704ffec86b",
-                "reference": "45b7f97a9e03db6aa052b6070bb2f4704ffec86b",
-                "shasum": ""
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.1",
-                "illuminate/view": "4.2.*",
-                "mockery/mockery": "0.7.2",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Robbo\\Presenter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "DBAD"
-            ],
-            "authors": [
-                {
-                    "name": "Robbo",
-                    "email": "robbo.clancy@gmail.com"
-                }
-            ],
-            "description": "Decorate your objects using presenters. Primarily to keep presentation logic out of your models.",
-            "keywords": [
-                "decorator",
-                "laravel",
-                "presenter"
-            ],
-            "time": "2017-02-22T07:43:54+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

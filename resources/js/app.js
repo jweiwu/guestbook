@@ -20,7 +20,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('guestbook', require('./components/Guestbook.vue').default);
+Vue.component('guestbook-form', require('./components/GuestbookForm.vue').default);
+Vue.component('paginate', require('vuejs-paginate'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

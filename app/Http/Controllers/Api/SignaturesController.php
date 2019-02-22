@@ -26,7 +26,8 @@ class SignaturesController extends Controller
      */
     public function index()
     {
-        //
+        $signatures = $this->service->Paginate();
+        return response()->json($signatures);
     }
 
     /**
@@ -37,7 +38,10 @@ class SignaturesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $instance = $request->only(['name', 'email', 'body']);
+        $signature = $this->service->Create($instance);
+        return response()->json($signature)->setStatusCode(201);
+
     }
 
     /**
@@ -48,7 +52,7 @@ class SignaturesController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->setStatusCode(404);
     }
 
     /**
@@ -60,7 +64,7 @@ class SignaturesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return response()->setStatusCode(404);
     }
 
     /**
@@ -71,6 +75,6 @@ class SignaturesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return response()->setStatusCode(404);
     }
 }

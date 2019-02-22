@@ -26,6 +26,11 @@ class SignatureService
 
     public function Create(array $attributes)
     {
-        $this->repository->create($attributes);
+        return $this->repository->create($attributes);
+    }
+
+    public function Paginate(int $page = 15)
+    {
+        return $this->repository->paginate($page);
     }
 }

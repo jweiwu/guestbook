@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Api\SignaturesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::Resource('signatures', SignaturesController::class)->only('index', 'store');
