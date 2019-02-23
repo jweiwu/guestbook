@@ -22,7 +22,7 @@ window.Vue = require('vue');
 
 Vue.component('guestbook', require('./components/Guestbook.vue').default);
 Vue.component('guestbook-form', require('./components/GuestbookForm.vue').default);
-Vue.component('paginate', require('vuejs-paginate'));
+// Vue.component('paginate', require('vuejs-paginate'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

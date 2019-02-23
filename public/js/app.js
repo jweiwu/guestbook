@@ -1763,6 +1763,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_pagination_bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-pagination-bootstrap */ "./node_modules/vue-pagination-bootstrap/index.js");
 //
 //
 //
@@ -1785,21 +1786,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    pagination: vue_pagination_bootstrap__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   name: "Guestbook",
   data: function data() {
     return {
       signatures: [],
-      pageCount: 1,
+      total: 0,
+      to: 0,
       endpoint: 'api/signatures?page='
     };
   },
@@ -1814,7 +1811,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(this.endpoint + page).then(function (_ref) {
         var data = _ref.data;
         _this.signatures = data.data;
-        _this.pageCount = data.meta.last_page;
+        _this.total = data.total;
+        _this.to = data.to;
       });
     }
   }
@@ -36984,63 +36982,45 @@ var render = function() {
     "div",
     [
       _vm._l(_vm.signatures, function(signature) {
-        return _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _c("span", {
-              staticClass: "glyphicon glyphicon-user",
-              attrs: { id: "start" }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { id: "started" } }, [_vm._v("By")]),
-            _vm._v(" " + _vm._s(signature.name) + "\n        ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("div", { staticClass: "col-md-2" }, [
-              _c("div", { staticClass: "thumbnail" }, [
-                _c("img", {
-                  attrs: { src: signature.avatar, alt: signature.name }
-                })
+        return _c(
+          "div",
+          { staticClass: "rounded shadow p-4 mb-4 bg-white my-sm-3" },
+          [
+            _c("div", { staticClass: "position-relative clearfix" }, [
+              _c("span", { staticClass: "user float-left" }, [
+                _c("i", { staticClass: "far fa-user fa-2x" }),
+                _vm._v(" "),
+                _c("label", [
+                  _vm._v(
+                    "By " +
+                      _vm._s(signature.name) +
+                      " <" +
+                      _vm._s(signature.email) +
+                      ">"
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "float-right" }, [
+                _c("time", [_vm._v(_vm._s(signature.created_at))])
               ])
             ]),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(signature.body))])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-footer" }, [
-            _c("span", {
-              staticClass: "glyphicon glyphicon-calendar",
-              attrs: { id: "visit" }
-            }),
-            _vm._v(" " + _vm._s(signature.date) + " |\n            "),
-            _c("span", {
-              staticClass: "glyphicon glyphicon-flag",
-              attrs: { id: "comment" }
-            }),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                attrs: { href: "#", id: "comments" },
-                on: {
-                  click: function($event) {
-                    return _vm.report(signature.id)
-                  }
-                }
-              },
-              [_vm._v("Report")]
-            )
-          ])
-        ])
+            _c("div", { staticClass: "position-relative my-sm-1" }, [
+              _c("p", [_vm._v(_vm._s(signature.body))])
+            ])
+          ]
+        )
       }),
       _vm._v(" "),
-      _c("paginate", {
+      _c("pagination", {
         attrs: {
-          "page-count": _vm.pageCount,
-          "click-handler": _vm.fetch,
-          "prev-text": "Prev",
-          "next-text": "Next",
-          "container-class": "pagination"
+          "nav-class": "padding-10",
+          "ul-class": "bg-color-red",
+          "li-class": "txt-color-blue",
+          total: _vm.total,
+          "page-size": _vm.to,
+          callback: _vm.fetch
         }
       })
     ],
@@ -37077,190 +37057,185 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "well well-sm", attrs: { id: "signature-form" } },
-      [
-        _c(
-          "form",
-          {
-            staticClass: "form-horizontal",
-            attrs: { method: "post" },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.onSubmit($event)
-              }
+    _c("div", { staticClass: "rounded shadow p-4 mb-4 bg-white my-sm-3" }, [
+      _c(
+        "form",
+        {
+          attrs: { method: "post" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit($event)
             }
-          },
-          [
-            _c("fieldset", [
-              _c("legend", { staticClass: "text-center" }, [
-                _vm._v("Sign the GuestBook")
-              ]),
+          }
+        },
+        [
+          _c("fieldset", [
+            _c("legend", { staticClass: "text-center" }, [
+              _vm._v("Sign the GuestBook")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-3 control-label",
+                  attrs: { for: "name" }
+                },
+                [_vm._v("Name")]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-md-3 control-label",
-                    attrs: { for: "name" }
-                  },
-                  [_vm._v("Name")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-md-9",
-                    class: { "has-error": _vm.errors.name }
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.signature.name,
-                          expression: "signature.name"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "name",
-                        type: "text",
-                        placeholder: "Your name"
-                      },
-                      domProps: { value: _vm.signature.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.signature, "name", $event.target.value)
-                        }
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-9",
+                  class: { "has-error": _vm.errors.name }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.signature.name,
+                        expression: "signature.name"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.name
-                      ? _c("span", { staticClass: "help-block text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors.name[0]))
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-md-3 control-label",
-                    attrs: { for: "email" }
-                  },
-                  [_vm._v("Your E-mail")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-md-9",
-                    class: { "has-error": _vm.errors.email }
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.signature.email,
-                          expression: "signature.email"
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "name",
+                      type: "text",
+                      placeholder: "Your name"
+                    },
+                    domProps: { value: _vm.signature.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "email",
-                        type: "text",
-                        placeholder: "Your email"
-                      },
-                      domProps: { value: _vm.signature.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.signature, "email", $event.target.value)
-                        }
+                        _vm.$set(_vm.signature, "name", $event.target.value)
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.email
-                      ? _c("span", { staticClass: "help-block text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors.email[0]))
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ]),
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.name
+                    ? _c("span", { staticClass: "help-block text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.name[0]))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-3 control-label",
+                  attrs: { for: "email" }
+                },
+                [_vm._v("Your E-mail")]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-md-3 control-label",
-                    attrs: { for: "body" }
-                  },
-                  [_vm._v("Your message")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-md-9",
-                    class: { "has-error": _vm.errors.body }
-                  },
-                  [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.signature.body,
-                          expression: "signature.body"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "body",
-                        placeholder: "Please enter your message here...",
-                        rows: "5"
-                      },
-                      domProps: { value: _vm.signature.body },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.signature, "body", $event.target.value)
-                        }
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-9",
+                  class: { "has-error": _vm.errors.email }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.signature.email,
+                        expression: "signature.email"
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors.body
-                      ? _c("span", { staticClass: "help-block text-danger" }, [
-                          _vm._v(_vm._s(_vm.errors.body[0]))
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ]),
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "email",
+                      type: "text",
+                      placeholder: "Your email"
+                    },
+                    domProps: { value: _vm.signature.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.signature, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.email
+                    ? _c("span", { staticClass: "help-block text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.email[0]))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-3 control-label",
+                  attrs: { for: "body" }
+                },
+                [_vm._v("Your message")]
+              ),
               _vm._v(" "),
-              _vm._m(0)
-            ])
-          ]
-        )
-      ]
-    )
+              _c(
+                "div",
+                {
+                  staticClass: "col-md-9",
+                  class: { "has-error": _vm.errors.body }
+                },
+                [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.signature.body,
+                        expression: "signature.body"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      id: "body",
+                      placeholder: "Please enter your message here...",
+                      rows: "5"
+                    },
+                    domProps: { value: _vm.signature.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.signature, "body", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.body
+                    ? _c("span", { staticClass: "help-block text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.body[0]))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -37388,6 +37363,131 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-pagination-bootstrap/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vue-pagination-bootstrap/index.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+    template: `<nav :class="[navClass]">
+        <ul class="pagination justify-content-center" :class="[ulClass]">
+            <li v-if="showPrevious()" :class="[liClass, { 'disabled' : currentPage <= 1 }]" class="page-item">
+                <a class="page-link" href="#" v-if="currentPage <= 1">
+                    <span aria-hidden="true">{{ config.previousText }}</span>
+                </a>
+                <a class="page-link" href="#" v-if="currentPage > 1 " :aria-label="config.ariaPrevious" @click.prevent="changePage(currentPage - 1)">
+                    <span aria-hidden="true">{{ config.previousText }}</span>
+                </a>
+            </li>
+            <li v-for="num in array" :class="[liClass, { 'active': num === currentPage }]" class="page-item">
+                <a class="page-link" href="#" @click.prevent="changePage(num)">{{ num }}</a>
+            </li>
+            <li v-if="showNext()" :class="[liClass, { 'disabled' : currentPage === lastPage || lastPage === 0 }]" class="page-item">
+                <a class="page-link" href="#" v-if="currentPage === lastPage || lastPage === 0">
+                    <span aria-hidden="true">{{ config.nextText }}</span>
+                </a>
+                <a class="page-link" href="#" v-if="currentPage < lastPage" :aria-label="config.ariaNext" @click.prevent="changePage(currentPage + 1)">
+                    <span aria-hidden="true">{{ config.nextText }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>`,
+    props: {
+        total: {
+            type: Number,
+            required: true
+        },
+        pageSize: {
+            type: Number,
+            required: true
+        },
+        callback: {
+            type: Function,
+            required: true
+        },
+        options: {
+            type: Object
+        },
+        navClass:{
+            type: String,
+            default: ""
+        },
+        ulClass:{
+            type: String,
+            default: ""
+        },
+        liClass:{
+            type: String,
+            default: ""
+        }
+    },
+    data() {
+        return { currentPage: 1 }
+    },
+    computed: {
+        _total() { return this.total },
+        _pageSize() { return this.pageSize },
+        lastPage() {
+            let _total = this._total / this._pageSize;
+            if (_total < 1)
+                return 1;
+
+            if (_total % 1 != 0)
+                return parseInt(_total + 1);
+
+            return _total;
+        },
+        array() {
+
+            let _from = this.currentPage - this.config.offset;
+            if (_from < 1)
+                _from = 1;
+
+            let _to = _from + (this.config.offset * 2);
+            if (_to >= this.lastPage)
+                _to = this.lastPage;
+
+            let _arr = [];
+            while (_from <= _to) {
+                _arr.push(_from);
+                _from++;
+            }
+
+            return _arr;
+        },
+        config() {
+            return Object.assign({
+                offset: 2,
+                ariaNext: 'Próximo',
+                ariaPrevious: 'Anterior',
+                previousText: '«',
+                nextText: '»',
+                alwaysShowPrevNext: true
+            }, this.options);
+        }
+    },
+    methods: {
+        showPrevious() {
+            return this.config.alwaysShowPrevNext || this.currentPage > 1;
+        },
+        showNext() {
+            return this.config.alwaysShowPrevNext || this.currentPage < this.lastPage;
+        },
+        changePage(page) {
+            if (this.currentPage === page) return;
+            this.currentPage = page;
+            this.callback(page);
+        }
+    }
+});
 
 
 /***/ }),
@@ -49320,17 +49420,6 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/vuejs-paginate/dist/index.js":
-/*!***************************************************!*\
-  !*** ./node_modules/vuejs-paginate/dist/index.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function(e,t){ true?module.exports=t():undefined}(this,function(){return function(e){function t(s){if(n[s])return n[s].exports;var a=n[s]={exports:{},id:s,loaded:!1};return e[s].call(a.exports,a,a.exports,t),a.loaded=!0,a.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){"use strict";function s(e){return e&&e.__esModule?e:{default:e}}var a=n(1),i=s(a);e.exports=i.default},function(e,t,n){n(2);var s=n(6)(n(7),n(8),"data-v-82963a40",null);e.exports=s.exports},function(e,t,n){var s=n(3);"string"==typeof s&&(s=[[e.id,s,""]]);n(5)(s,{});s.locals&&(e.exports=s.locals)},function(e,t,n){t=e.exports=n(4)(),t.push([e.id,"a[data-v-82963a40]{cursor:pointer}",""])},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var n=this[t];n[2]?e.push("@media "+n[2]+"{"+n[1]+"}"):e.push(n[1])}return e.join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var s={},a=0;a<this.length;a++){var i=this[a][0];"number"==typeof i&&(s[i]=!0)}for(a=0;a<t.length;a++){var r=t[a];"number"==typeof r[0]&&s[r[0]]||(n&&!r[2]?r[2]=n:n&&(r[2]="("+r[2]+") and ("+n+")"),e.push(r))}},e}},function(e,t,n){function s(e,t){for(var n=0;n<e.length;n++){var s=e[n],a=c[s.id];if(a){a.refs++;for(var i=0;i<a.parts.length;i++)a.parts[i](s.parts[i]);for(;i<s.parts.length;i++)a.parts.push(l(s.parts[i],t))}else{for(var r=[],i=0;i<s.parts.length;i++)r.push(l(s.parts[i],t));c[s.id]={id:s.id,refs:1,parts:r}}}}function a(e){for(var t=[],n={},s=0;s<e.length;s++){var a=e[s],i=a[0],r=a[1],o=a[2],l=a[3],u={css:r,media:o,sourceMap:l};n[i]?n[i].parts.push(u):t.push(n[i]={id:i,parts:[u]})}return t}function i(e,t){var n=g(),s=C[C.length-1];if("top"===e.insertAt)s?s.nextSibling?n.insertBefore(t,s.nextSibling):n.appendChild(t):n.insertBefore(t,n.firstChild),C.push(t);else{if("bottom"!==e.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");n.appendChild(t)}}function r(e){e.parentNode.removeChild(e);var t=C.indexOf(e);t>=0&&C.splice(t,1)}function o(e){var t=document.createElement("style");return t.type="text/css",i(e,t),t}function l(e,t){var n,s,a;if(t.singleton){var i=v++;n=h||(h=o(t)),s=u.bind(null,n,i,!1),a=u.bind(null,n,i,!0)}else n=o(t),s=d.bind(null,n),a=function(){r(n)};return s(e),function(t){if(t){if(t.css===e.css&&t.media===e.media&&t.sourceMap===e.sourceMap)return;s(e=t)}else a()}}function u(e,t,n,s){var a=n?"":s.css;if(e.styleSheet)e.styleSheet.cssText=b(t,a);else{var i=document.createTextNode(a),r=e.childNodes;r[t]&&e.removeChild(r[t]),r.length?e.insertBefore(i,r[t]):e.appendChild(i)}}function d(e,t){var n=t.css,s=t.media,a=t.sourceMap;if(s&&e.setAttribute("media",s),a&&(n+="\n/*# sourceURL="+a.sources[0]+" */",n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(a))))+" */"),e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}var c={},p=function(e){var t;return function(){return"undefined"==typeof t&&(t=e.apply(this,arguments)),t}},f=p(function(){return/msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase())}),g=p(function(){return document.head||document.getElementsByTagName("head")[0]}),h=null,v=0,C=[];e.exports=function(e,t){t=t||{},"undefined"==typeof t.singleton&&(t.singleton=f()),"undefined"==typeof t.insertAt&&(t.insertAt="bottom");var n=a(e);return s(n,t),function(e){for(var i=[],r=0;r<n.length;r++){var o=n[r],l=c[o.id];l.refs--,i.push(l)}if(e){var u=a(e);s(u,t)}for(var r=0;r<i.length;r++){var l=i[r];if(0===l.refs){for(var d=0;d<l.parts.length;d++)l.parts[d]();delete c[l.id]}}}};var b=function(){var e=[];return function(t,n){return e[t]=n,e.filter(Boolean).join("\n")}}()},function(e,t){e.exports=function(e,t,n,s){var a,i=e=e||{},r=typeof e.default;"object"!==r&&"function"!==r||(a=e,i=e.default);var o="function"==typeof i?i.options:i;if(t&&(o.render=t.render,o.staticRenderFns=t.staticRenderFns),n&&(o._scopeId=n),s){var l=o.computed||(o.computed={});Object.keys(s).forEach(function(e){var t=s[e];l[e]=function(){return t}})}return{esModule:a,exports:i,options:o}}},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default={props:{value:{type:Number},pageCount:{type:Number,required:!0},forcePage:{type:Number},clickHandler:{type:Function,default:function(){}},pageRange:{type:Number,default:3},marginPages:{type:Number,default:1},prevText:{type:String,default:"Prev"},nextText:{type:String,default:"Next"},breakViewText:{type:String,default:"…"},containerClass:{type:String},pageClass:{type:String},pageLinkClass:{type:String},prevClass:{type:String},prevLinkClass:{type:String},nextClass:{type:String},nextLinkClass:{type:String},breakViewClass:{type:String},breakViewLinkClass:{type:String},activeClass:{type:String,default:"active"},disabledClass:{type:String,default:"disabled"},noLiSurround:{type:Boolean,default:!1},firstLastButton:{type:Boolean,default:!1},firstButtonText:{type:String,default:"First"},lastButtonText:{type:String,default:"Last"},hidePrevNext:{type:Boolean,default:!1}},beforeUpdate:function(){void 0!==this.forcePage&&this.forcePage!==this.selected&&(this.selected=this.forcePage)},computed:{selected:{get:function(){return this.value||this.innerValue},set:function(e){this.innerValue=e}},pages:function(){var e=this,t={};if(this.pageCount<=this.pageRange)for(var n=0;n<this.pageCount;n++){var s={index:n,content:n+1,selected:n===this.selected-1};t[n]=s}else{for(var a=Math.floor(this.pageRange/2),i=function(n){var s={index:n,content:n+1,selected:n===e.selected-1};t[n]=s},r=function(e){var n={disabled:!0,breakView:!0};t[e]=n},o=0;o<this.marginPages;o++)i(o);var l=0;this.selected-a>0&&(l=this.selected-1-a);var u=l+this.pageRange-1;u>=this.pageCount&&(u=this.pageCount-1,l=u-this.pageRange+1);for(var d=l;d<=u&&d<=this.pageCount-1;d++)i(d);l>this.marginPages&&r(l-1),u+1<this.pageCount-this.marginPages&&r(u+1);for(var c=this.pageCount-1;c>=this.pageCount-this.marginPages;c--)i(c)}return t}},data:function(){return{innerValue:1}},methods:{handlePageSelected:function(e){this.selected!==e&&(this.innerValue=e,this.$emit("input",e),this.clickHandler(e))},prevPage:function(){this.selected<=1||this.handlePageSelected(this.selected-1)},nextPage:function(){this.selected>=this.pageCount||this.handlePageSelected(this.selected+1)},firstPageSelected:function(){return 1===this.selected},lastPageSelected:function(){return this.selected===this.pageCount||0===this.pageCount},selectFirstPage:function(){this.selected<=1||this.handlePageSelected(1)},selectLastPage:function(){this.selected>=this.pageCount||this.handlePageSelected(this.pageCount)}}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return e.noLiSurround?n("div",{class:e.containerClass},[e.firstLastButton?n("a",{class:[e.pageLinkClass,e.firstPageSelected()?e.disabledClass:""],attrs:{tabindex:"0"},domProps:{innerHTML:e._s(e.firstButtonText)},on:{click:function(t){e.selectFirstPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.selectFirstPage():null}}}):e._e(),e._v(" "),e.firstPageSelected()&&e.hidePrevNext?e._e():n("a",{class:[e.prevLinkClass,e.firstPageSelected()?e.disabledClass:""],attrs:{tabindex:"0"},domProps:{innerHTML:e._s(e.prevText)},on:{click:function(t){e.prevPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.prevPage():null}}}),e._v(" "),e._l(e.pages,function(t){return[t.breakView?n("a",{class:[e.pageLinkClass,e.breakViewLinkClass,t.disabled?e.disabledClass:""],attrs:{tabindex:"0"}},[e._t("breakViewContent",[e._v(e._s(e.breakViewText))])],2):t.disabled?n("a",{class:[e.pageLinkClass,t.selected?e.activeClass:"",e.disabledClass],attrs:{tabindex:"0"}},[e._v(e._s(t.content))]):n("a",{class:[e.pageLinkClass,t.selected?e.activeClass:""],attrs:{tabindex:"0"},on:{click:function(n){e.handlePageSelected(t.index+1)},keyup:function(n){return"button"in n||!e._k(n.keyCode,"enter",13)?void e.handlePageSelected(t.index+1):null}}},[e._v(e._s(t.content))])]}),e._v(" "),e.lastPageSelected()&&e.hidePrevNext?e._e():n("a",{class:[e.nextLinkClass,e.lastPageSelected()?e.disabledClass:""],attrs:{tabindex:"0"},domProps:{innerHTML:e._s(e.nextText)},on:{click:function(t){e.nextPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.nextPage():null}}}),e._v(" "),e.firstLastButton?n("a",{class:[e.pageLinkClass,e.lastPageSelected()?e.disabledClass:""],attrs:{tabindex:"0"},domProps:{innerHTML:e._s(e.lastButtonText)},on:{click:function(t){e.selectLastPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.selectLastPage():null}}}):e._e()],2):n("ul",{class:e.containerClass},[e.firstLastButton?n("li",{class:[e.pageClass,e.firstPageSelected()?e.disabledClass:""]},[n("a",{class:e.pageLinkClass,attrs:{tabindex:e.firstPageSelected()?-1:0},domProps:{innerHTML:e._s(e.firstButtonText)},on:{click:function(t){e.selectFirstPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.selectFirstPage():null}}})]):e._e(),e._v(" "),e.firstPageSelected()&&e.hidePrevNext?e._e():n("li",{class:[e.prevClass,e.firstPageSelected()?e.disabledClass:""]},[n("a",{class:e.prevLinkClass,attrs:{tabindex:e.firstPageSelected()?-1:0},domProps:{innerHTML:e._s(e.prevText)},on:{click:function(t){e.prevPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.prevPage():null}}})]),e._v(" "),e._l(e.pages,function(t){return n("li",{class:[e.pageClass,t.selected?e.activeClass:"",t.disabled?e.disabledClass:"",t.breakView?e.breakViewClass:""]},[t.breakView?n("a",{class:[e.pageLinkClass,e.breakViewLinkClass],attrs:{tabindex:"0"}},[e._t("breakViewContent",[e._v(e._s(e.breakViewText))])],2):t.disabled?n("a",{class:e.pageLinkClass,attrs:{tabindex:"0"}},[e._v(e._s(t.content))]):n("a",{class:e.pageLinkClass,attrs:{tabindex:"0"},on:{click:function(n){e.handlePageSelected(t.index+1)},keyup:function(n){return"button"in n||!e._k(n.keyCode,"enter",13)?void e.handlePageSelected(t.index+1):null}}},[e._v(e._s(t.content))])])}),e._v(" "),e.lastPageSelected()&&e.hidePrevNext?e._e():n("li",{class:[e.nextClass,e.lastPageSelected()?e.disabledClass:""]},[n("a",{class:e.nextLinkClass,attrs:{tabindex:e.lastPageSelected()?-1:0},domProps:{innerHTML:e._s(e.nextText)},on:{click:function(t){e.nextPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.nextPage():null}}})]),e._v(" "),e.firstLastButton?n("li",{class:[e.pageClass,e.lastPageSelected()?e.disabledClass:""]},[n("a",{class:e.pageLinkClass,attrs:{tabindex:e.lastPageSelected()?-1:0},domProps:{innerHTML:e._s(e.lastButtonText)},on:{click:function(t){e.selectLastPage()},keyup:function(t){return"button"in t||!e._k(t.keyCode,"enter",13)?void e.selectLastPage():null}}})]):e._e()],2)},staticRenderFns:[]}}])});
-
-/***/ }),
-
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -49421,8 +49510,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('guestbook', __webpack_require__(/*! ./components/Guestbook.vue */ "./resources/js/components/Guestbook.vue").default);
-Vue.component('guestbook-form', __webpack_require__(/*! ./components/GuestbookForm.vue */ "./resources/js/components/GuestbookForm.vue").default);
-Vue.component('paginate', __webpack_require__(/*! vuejs-paginate */ "./node_modules/vuejs-paginate/dist/index.js"));
+Vue.component('guestbook-form', __webpack_require__(/*! ./components/GuestbookForm.vue */ "./resources/js/components/GuestbookForm.vue").default); // Vue.component('paginate', require('vuejs-paginate'));
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49649,8 +49738,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\program\guestbook\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\program\guestbook\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\workspace\guestbook\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\workspace\guestbook\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

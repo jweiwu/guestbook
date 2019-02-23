@@ -1,41 +1,36 @@
 <template>
     <div>
-        <div class="panel panel-default" v-for="signature in signatures">
-            <div class="panel-heading">
-                <span class="glyphicon glyphicon-user" id="start"></span>
-                <label id="started">By</label> {{ signature.name }}
+        <div class="rounded shadow p-4 mb-4 bg-white my-sm-3" v-for="signature in signatures">
+            <div class="position-relative clearfix">
+                <span class="user float-left">
+                    <i class="far fa-user fa-2x"></i>
+                    <label>By {{ signature.name }} <{{signature.email}}></label>
+                </span>
+                <span class="float-right">
+                    <time>{{signature.created_at}}</time>
+                </span>
             </div>
-            <div class="panel-body">
-                <div class="col-md-2">
-                    <div class="thumbnail">
-                        <img :src="signature.avatar" :alt="signature.name">
-                    </div>
-                </div>
+            <div class="position-relative my-sm-1">
                 <p>{{ signature.body }}</p>
             </div>
-            <div class="panel-footer">
-                <span class="glyphicon glyphicon-calendar" id="visit"></span> {{ signature.date }} |
-                <span class="glyphicon glyphicon-flag" id="comment"></span>
-                <a href="#" id="comments" @click="report(signature.id)">Report</a>
-            </div>
         </div>
-        <paginate
-            :page-count="pageCount"
-            :click-handler="fetch"
-            :prev-text="'Prev'"
-            :next-text="'Next'"
-            :container-class="'pagination'">
-        </paginate>
+        <pagination  nav-class="padding-10" ul-class="bg-color-red" li-class="txt-color-blue"
+                  :total="total" :page-size="to" :callback="fetch">
+        </pagination >
     </div>
 </template>
 
 <script>
+    import pagination from 'vue-pagination-bootstrap';
+
     export default {
+        components: { pagination },
         name: "Guestbook",
         data() {
             return {
                 signatures: [],
-                pageCount: 1,
+                total: 0,
+                to: 0,
                 endpoint: 'api/signatures?page='
             };
         },
@@ -47,7 +42,8 @@
                 axios.get(this.endpoint + page)
                     .then(({data}) => {
                         this.signatures = data.data;
-                        this.pageCount = data.meta.last_page;
+                        this.total = data.total;
+                        this.to = data.to;
                     });
             }
         }

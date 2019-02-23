@@ -4,8 +4,8 @@
             <strong>Success!</strong> Your signature has been saved successfully.
         </div>
 
-        <div class="well well-sm" id="signature-form">
-            <form class="form-horizontal" method="post" @submit.prevent="onSubmit">
+        <div class="rounded shadow p-4 mb-4 bg-white my-sm-3">
+            <form method="post" @submit.prevent="onSubmit">
                 <fieldset>
                     <legend class="text-center">Sign the GuestBook</legend>
 
